@@ -22,10 +22,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_04_135953) do
     t.text "description"
     t.decimal "price"
     t.integer "stock_quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "category_id", null: false
-    t.index ["category_id"], name: "index_products_on_category_id"
+    t.references "category", foreign_key: true
+  t.timestamps
   end
 
   add_foreign_key "products", "categories"

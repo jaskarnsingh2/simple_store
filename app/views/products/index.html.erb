@@ -1,12 +1,10 @@
-<h1>All Products</h1>
-
 <ul>
   <% @products.each do |product| %>
     <li>
-      <%= product.title %> - $<%= product.price %> 
-      (Category: <%= product.category.name %>)
+      <h3><%= product.title %> - <%= number_to_currency(product.price) %></h3>
+      <p><%= product.description %></p> <!-- Display description -->
+      <p><strong>Stock:</strong> <%= product.stock_quantity %></p> <!-- Display stock quantity -->
+      <p><strong>Category:</strong> <%= product.category.name %></p>
     </li>
   <% end %>
 </ul>
-
-
