@@ -8,11 +8,30 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 require 'faker'
+require 'csv'
 
-676.times do
+# Clear existing data
+Product.destroy_all
+Category.destroy_all
+
+# Read the CSV file
+csv_file = Rails.root.join('db/products.csv')
+csv_data = File.read(csv_file)
+
+products = CSV.parse(csv_data, headers: true)
+
+products.each do |row|
+  # Find or create the category
+  category_name = row['category']
+  category = Category.find_or_create_by(name: category_name)
+
+  # Create the product
   Product.create(
-    title: Faker::Commerce.product_name,
-    price: Faker::Commerce.price(range: 0..100.0),
-    stock_quantity: Faker::Number.between(from: 1, to: 100)
+    title: row['title'],
+    description: row['description'],
+    price: row['price'],
+    stock_quantity: row['stock_quantity'],
+    category: category
   )
 end
+
